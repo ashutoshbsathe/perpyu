@@ -42,6 +42,7 @@ def get_cifar10_data_loaders(batch_size=64, n_train=40000, \
         train=False, transform=test_transform)
 
     indices = np.arange(0, 50000)
+    np.random.seed(SEED)
     np.random.shuffle(indices)
 
     train_sampler = SRS(indices[:n_train])
