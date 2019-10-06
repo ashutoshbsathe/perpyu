@@ -99,3 +99,45 @@ def get_cifar10_data_loaders(batch_size=64, n_train=40000, \
         sampler=test_sampler)
     
     return train_loader, val_loader, test_loader 
+
+def get_fmnist_data_loaders(batch_size=64, n_train=50000, \
+    n_val=10000, n_test=10000, train_transform=None, \
+    val_transform=None, test_transform=None):
+
+    assert n_train + n_val == 60000
+    if train_transform is None:
+        train_transform = transforms.Compose([
+            transforms.ToTensor(),
+        ])
+    if val_transform is None:
+        val_transform = transforms.Compose([
+            transforms.ToTensor(),
+        ])
+    if test_transform is None:
+        test_transform = transforms.Compose([
+            transforms.ToTensor(),
+        ])
+    
+    train_set = datasets.FashionMNIST(root=FMNIST_DATA_ROOT, download=True, \
+        train=True, transform=train_transform)
+    val_set = datasets.FashionMNIST(root=FMNIST_DATA_ROOT, download=True, \
+        train=True, transform=val_transform)
+    test_set = datasets.FashionMNIST(root=FMNIST_DATA_ROOT, download=True, \
+        train=False, transform=test_transform)
+
+    indices = np.arange(0, 60000)
+    np.random.seed(SEED)
+    np.random.shuffle(indices)
+
+    train_sampler = SRS(indices[:n_train])
+    val_sampler = SRS(indices[n_train:])
+    test_sampler = SRS(np.arange(0, 10000))
+
+    train_loader = data_utils.DataLoader(train_set, batch_size=batch_size, \
+        sampler=train_sampler)
+    val_loader = data_utils.DataLoader(val_set, batch_size=batch_size, \
+        sampler=val_sampler)
+    test_loader = data_utils.DataLoader(test_set, batch_size=batch_size, \
+        sampler=test_sampler)
+    
+    return train_loader, val_loader, test_loader 
