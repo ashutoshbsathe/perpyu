@@ -1,3 +1,4 @@
+import os
 name = "perpyu"
 
 with open(os.path.join(os.path.dirname(__file__), 'VERSION')) as f:
