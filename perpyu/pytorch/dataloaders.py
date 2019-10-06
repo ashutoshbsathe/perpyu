@@ -9,7 +9,7 @@ MNIST_DATA_ROOT = './mnist_data/'
 CIFAR10_DATA_ROOT = './cifar10_data/'
 FMNIST_DATA_ROOT = './fmnist_data/'
 
-SEED = 161803398874929 # Golden Ratio
+SEED = 161803398 # Golden Ratio
 
 def get_mnist_data_loaders(batch_size=64, n_train=50000, \
     n_val=10000, n_test=10000, train_transform=None, \
